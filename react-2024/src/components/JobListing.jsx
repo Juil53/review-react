@@ -1,4 +1,14 @@
+import { useState } from "react";
+import { FaMapMarker } from "react-icons/fa";
+
 const JobListing = ({ job }) => {
+  const [showFullDescription, setShowFullDescription] = useState(false);
+  let description = job.description;
+
+  if (!showFullDescription) {
+    description = description.substring(0, 90) + "...";
+  }
+
   return (
     <div className="relative bg-white shadow-md rounded-xl" key={job.id}>
       <div className="p-4">
@@ -7,15 +17,20 @@ const JobListing = ({ job }) => {
           <h3 className="text-xl font-bold">{job.title}</h3>
         </div>
 
-        <div className="mb-5">{job.description}</div>
-
+        <div className="mb-5">{description}</div>
+        <button
+          onClick={() => setShowFullDescription((prevState) => !prevState)}
+          className="mb-5 text-indigo-500 hover:text-indigo-600"
+        >
+          {showFullDescription ? "Less" : "More"}
+        </button>
         <h3 className="mb-2 text-indigo-500">{job.salary}</h3>
 
         <div className="mb-5 border border-gray-100"></div>
 
         <div className="flex flex-col justify-between mb-4 lg:flex-row">
           <div className="mb-3 text-orange-700">
-            <i className="text-lg fa-solid fa-location-dot"></i>
+            <FaMapMarker className="inline mb-1 mr-1 text-lg"/>
             {job.location}
           </div>
           <a
